@@ -12,20 +12,14 @@ using System.Data.SqlClient;
 
 namespace ВСОШ_База_Данных
 {
-    public partial class Form1 : Form
+    public partial class Form2 : Form
     {
         string connectionString = "Server=localhost;Port=5432;Database=VOSH_DB; User Id = postgres;Password=2789;";
-        public Form1()
+        public Form2()
         {
             InitializeComponent();
             SqlConnectReader();
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void SqlConnectReader()
         {
             NpgsqlConnection sqlConnection = new NpgsqlConnection(connectionString);
@@ -33,7 +27,7 @@ namespace ВСОШ_База_Данных
             NpgsqlCommand comand = new NpgsqlCommand();
             comand.Connection = sqlConnection;
             comand.CommandType = CommandType.Text;
-            comand.CommandText = "SELECT * FROM public.schools\r\nORDER BY school_id ASC ";
+            comand.CommandText = "SELECT * FROM public.status\r\nORDER BY status_id ASC ";
             NpgsqlDataReader comandDataReader = comand.ExecuteReader();
             if (comandDataReader.HasRows)
             {
@@ -52,7 +46,7 @@ namespace ВСОШ_База_Данных
             NpgsqlCommand comand = new NpgsqlCommand();
             comand.Connection = sqlConnection;
             comand.CommandType = CommandType.Text;
-            comand.CommandText = String.Format("INSERT INTO public.schools (school_number, school_short_name, school_full_name) values  ('{0}', '{1}', '{2}')", textBox1.Text, textBox2.Text, textBox3.Text);
+            comand.CommandText = String.Format("INSERT INTO public.status (status_name) values ('{0}')", textBox2.Text);
             NpgsqlDataReader comandDataReader = comand.ExecuteReader();
             if (comandDataReader.HasRows)
             {
@@ -72,7 +66,7 @@ namespace ВСОШ_База_Данных
             NpgsqlCommand comand = new NpgsqlCommand();
             comand.Connection = sqlConnection;
             comand.CommandType = CommandType.Text;
-            comand.CommandText = String.Format("UPDATE public.schools SET school_number = '{0}',school_short_name = '{1}',school_full_name = '{2}' WHERE school_id = '{3}'", textBox6.Text, textBox5.Text, textBox4.Text, Convert.ToInt32(textBox7.Text));
+            comand.CommandText = String.Format("UPDATE public.status SET status_name = '{0}' WHERE status_id = '{1}'", textBox6.Text,  Convert.ToInt32(textBox7.Text));
             NpgsqlDataReader comandDataReader = comand.ExecuteReader();
             if (comandDataReader.HasRows)
             {
@@ -92,7 +86,7 @@ namespace ВСОШ_База_Данных
             NpgsqlCommand comand = new NpgsqlCommand();
             comand.Connection = sqlConnection;
             comand.CommandType = CommandType.Text;
-            comand.CommandText = String.Format("DELETE FROM public.schools WHERE school_id = '{0}'", Convert.ToInt32(textBox9.Text));
+            comand.CommandText = String.Format("DELETE FROM public.status WHERE status_id = '{0}'", Convert.ToInt32(textBox9.Text));
             NpgsqlDataReader comandDataReader = comand.ExecuteReader();
             if (comandDataReader.HasRows)
             {
@@ -112,7 +106,7 @@ namespace ВСОШ_База_Данных
             NpgsqlCommand comand = new NpgsqlCommand();
             comand.Connection = sqlConnection;
             comand.CommandType = CommandType.Text;
-            comand.CommandText = String.Format("SELECT * FROM public.schools WHERE school_id = '{0}'", Convert.ToInt32(textBox8.Text));
+            comand.CommandText = String.Format("SELECT * FROM public.status WHERE status_id = '{0}'", Convert.ToInt32(textBox8.Text));
             NpgsqlDataReader comandDataReader = comand.ExecuteReader();
             if (comandDataReader.HasRows)
             {
@@ -129,6 +123,4 @@ namespace ВСОШ_База_Данных
             SqlConnectReader();
         }
     }
-
-    
 }
